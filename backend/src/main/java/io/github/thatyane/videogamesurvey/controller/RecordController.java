@@ -39,18 +39,18 @@ public class RecordController {
             @RequestParam(value = "minDate", defaultValue = "") String minDate,
             @RequestParam(value = "maxDate", defaultValue = "") String maxDate,
             @RequestParam(value = "page", defaultValue = "0") Integer page,
-            @RequestParam(value = "linesPerPage", defaultValue = "0") Integer linesPerPage,
+            @RequestParam(value = "size", defaultValue = "0") Integer size,
             @RequestParam(value = "orderBy", defaultValue = "moment") String orderBy,
-            @RequestParam(value = "direction", defaultValue = "DESC") String direction) {
+            @RequestParam(value = "sort", defaultValue = "DESC") String sort) {
 
         Instant min = ("".equals(minDate)) ? null : Instant.parse(minDate);
         Instant max = ("".equals(maxDate)) ? null : Instant.parse(maxDate);
 
-        if (linesPerPage == 0) {
-            linesPerPage = Integer.MAX_VALUE;
+        if (size == 0) {
+            size = Integer.MAX_VALUE;
         }
 
-        PageRequest pageRequest = PageRequest.of(page, linesPerPage, Sort.Direction.valueOf(direction), orderBy);
+        PageRequest pageRequest = PageRequest.of(page, size, Sort.Direction.valueOf(sort), orderBy);
 
         Page<RecordDTO> games = recordService.findByMoments(min, max, pageRequest);
         return ResponseEntity.ok().body(games);
