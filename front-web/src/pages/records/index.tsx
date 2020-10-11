@@ -6,7 +6,7 @@ import { formatDate } from './helpers';
 import Pagination from './pagination';
 import Filters from '../../components/filters/header';
 
-const BASE_URL = 'http://localhost:8080';
+const BASE_URL = 'https://video-game-survey.herokuapp.com';
 
 const Records = () => {
   const [recordsResponse, setRecordsResponse] = useState<RecordsResponse>();

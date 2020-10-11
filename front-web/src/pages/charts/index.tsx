@@ -10,7 +10,7 @@ import {
   getPlatformChartData,
 } from './helpers';
 
-const BASE_URL = 'http://localhost:8080';
+const BASE_URL = 'https://video-game-survey.herokuapp.com';
 
 type PieChartData = {
   labels: string[];
