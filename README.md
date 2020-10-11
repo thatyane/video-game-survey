@@ -1,9 +1,11 @@
 # video-game-survey
 A video game survey application
+https://video-game-survey.netlify.app/
 
 ## Features
 ### Mobile
-* Vote for a game
+* Choose your favorite game
+* Create game (pending)
 
 ### Web
 * Listing of chosen games
@@ -25,6 +27,6 @@ A video game survey application
 * **Mockito**
 * **Hamcrest**
 * **PostgreSQL 12**
-* **Flyway 6.4.4**
+* **Flyway 6**
 * **Heroku**
 * **Netlify**
