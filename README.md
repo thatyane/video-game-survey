@@ -2,8 +2,14 @@
 A video game survey application
 
 ## Features
+### Mobile
+* Vote for a game
 
-
+### Web
+* Listing of chosen games
+* Top 8 rated games 
+* Dashboard by platforms 
+* Dashboard by genre 
 
 ## API'S
 * Create a record: `POST/records`
@@ -12,14 +18,12 @@ A video game survey application
 
 ### Technologies used
 
-This project was developed with:
-
 * **Java 11**
-* **Spring Boot 2.3.3**
+* **Spring Boot 2**
 * **Maven**
 * **Junit 5**
 * **Mockito**
-* **Hamcrest 2.2**
+* **Hamcrest**
 * **PostgreSQL 12**
 * **Flyway 6.4.4**
 * **Heroku**

@@ -25,7 +25,7 @@ const Home = () => {
       </View>
       <View style={styles.footer}>
         <RectButton style={styles.button} onPress={handleOnPress}>
-          <Text style={styles.buttonText}>COLETAR DADOS</Text>
+          <Text style={styles.buttonText}>QUERO VOTAR</Text>
           <View style={styles.buttonIcon}>
             <Text>
               <Icon name="chevron-right" color="#FFF" size={25} />

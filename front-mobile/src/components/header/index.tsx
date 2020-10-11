@@ -14,7 +14,7 @@ const Header = () => {
     <TouchableWithoutFeedback onPress={handleOnPress}>
       <View style={styles.header}>
         <Image source={require('../../assets/logo.png')} />
-        <Text style={styles.textLogo1}>Big Game</Text>
+        <Text style={styles.textLogo1}>Video Game</Text>
         <Text style={styles.textLogo2}>Survey</Text>
       </View>
     </TouchableWithoutFeedback>

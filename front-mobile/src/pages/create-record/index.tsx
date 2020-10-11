@@ -6,10 +6,10 @@ import { Game, GamePlatform } from './types';
 import RNPickerSelect from 'react-native-picker-select';
 import { FontAwesome5 as Icon } from '@expo/vector-icons';
 import axios from 'axios';
-import { RectButton } from 'react-native-gesture-handler';
+import { RectButton, ScrollView } from 'react-native-gesture-handler';
 
 const placeholder = {
-  label: 'Selecione o game',
+  label: 'Selecione o jogo',
   value: null,
 };
 
@@ -25,6 +25,7 @@ const mapSelectValues = (games: Game[]) => {
 
 const CreateRecord = () => {
   const [name, setName] = useState('');
+  const [email, setEmail] = useState('');
   const [age, setAge] = useState('');
   const [platform, setPlatform] = useState<GamePlatform>();
   const [selectedGame, setSelectedGame] = useState('');
@@ -40,12 +41,13 @@ const CreateRecord = () => {
   };
 
   const handleSubmit = () => {
-    const payload = { name, age, gameId: selectedGame };
+    const payload = { email, name, age, gameId: selectedGame };
     axios
       .post(`${BASE_URL}/records`, payload)
       .then(() => {
         Alert.alert('Voto salvo com sucesso!');
         setName('');
+        setEmail('');
         setAge('');
         setSelectedGame('');
         setPlatform(undefined);
@@ -66,13 +68,21 @@ const CreateRecord = () => {
   return (
     <>
       <Header />
-      <View style={styles.container}>
+      <ScrollView style={styles.container}>
         <TextInput
           style={styles.inputText}
           placeholder="Nome"
           placeholderTextColor="#9E9E9E"
           onChangeText={(text) => setName(text)}
           value={name}
+        />
+        <TextInput
+          keyboardType="email-address"
+          style={styles.inputText}
+          placeholder="E-mail"
+          placeholderTextColor="#9E9E9E"
+          onChangeText={(text) => setEmail(text)}
+          value={email}
         />
         <TextInput
           keyboardType="numeric"
@@ -120,7 +130,7 @@ const CreateRecord = () => {
             <Text style={styles.buttonText}>SALVAR</Text>
           </RectButton>
         </View>
-      </View>
+      </ScrollView>
     </>
   );
 };
@@ -161,7 +171,7 @@ const pickerSelectStyles = StyleSheet.create({
 
 const styles = StyleSheet.create({
   container: {
-    marginTop: '15%',
+    marginTop: '10%',
     paddingRight: '5%',
     paddingLeft: '5%',
     paddingBottom: 50,
@@ -182,7 +192,7 @@ const styles = StyleSheet.create({
     justifyContent: 'space-between',
   },
   footer: {
-    marginTop: '15%',
+    marginTop: '10%',
     alignItems: 'center',
   },
   button: {
