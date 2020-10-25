@@ -3,62 +3,55 @@ package io.github.thatyane.videogamesurvey.controller;
 import io.github.thatyane.videogamesurvey.dto.GameDTO;
 import io.github.thatyane.videogamesurvey.model.enums.Platform;
 import io.github.thatyane.videogamesurvey.service.GameService;
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.extension.ExtendWith;
+import org.junit.jupiter.api.TestInstance;
+import org.mockito.BDDMockito;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
+import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.MediaType;
-import org.springframework.test.context.ContextConfiguration;
-import org.springframework.test.context.junit.jupiter.SpringExtension;
+import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.web.servlet.MockMvc;
-import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 
-import java.util.Arrays;
 import java.util.List;
 
 import static org.hamcrest.Matchers.hasSize;
 import static org.hamcrest.Matchers.is;
-import static org.mockito.Mockito.*;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
-
-@ExtendWith(SpringExtension.class)
-@ContextConfiguration(classes = {
-        GameController.class
-})
+@SpringBootTest
+@AutoConfigureMockMvc
+@ActiveProfiles("test")
+@TestInstance(TestInstance.Lifecycle.PER_CLASS)
 public class GameControllerTest {
 
     private final String BASE_URL = "/games";
-
-    private MockMvc mockMvc;
+    private static final String NOME_GAME_1 = "Super Mario";
+    private static final String NOME_GAME_2 = "FIFA 20";
 
     @Autowired
-    private GameController gameController;
+    private MockMvc mockMvc;
 
     @MockBean
     private GameService gameService;
 
-    @BeforeEach
-    public void setUp() {
-        mockMvc = MockMvcBuilders
-                .standaloneSetup(gameController).build();
-    }
-
     @Test
-    public void testFindAll() throws Exception {
-        GameDTO game = new GameDTO(1L, "Super Mario", Platform.NINTENDO);
-        List<GameDTO> games = Arrays.asList(game);
+    public void shouldFindAll() throws Exception {
+        BDDMockito.given(gameService.findAllDTO()).willReturn(getGamesDTO());
 
-        when(gameService.findAllDTO()).thenReturn(games);
-
-        mockMvc.perform(get(BASE_URL))
+        mockMvc.perform(get(BASE_URL).contentType(MediaType.APPLICATION_JSON))
                 .andExpect(content().contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
-                .andExpect(jsonPath("$", hasSize(1)))
-                .andExpect(jsonPath("$[0].title", is(game.getTitle())));
+                .andExpect(jsonPath("$", hasSize(2)))
+                .andExpect(jsonPath("$[0].title", is(NOME_GAME_1)))
+                .andExpect(jsonPath("$[1].title", is(NOME_GAME_2)));
+    }
 
-        verify(gameService, times(1)).findAllDTO();
+    public List<GameDTO> getGamesDTO() {
+        GameDTO game1 = new GameDTO(1L, NOME_GAME_1, Platform.NINTENDO);
+        GameDTO game2 = new GameDTO(1L, NOME_GAME_2, Platform.PLAYSTATION);
+        return List.of(game1, game2);
     }
 }

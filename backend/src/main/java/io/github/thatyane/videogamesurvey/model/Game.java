@@ -50,6 +50,11 @@ public class Game implements Serializable {
         this.genre = genre;
     }
 
+    public Game(String title, Platform platform) {
+        this.title = title;
+        this.platform = platform;
+    }
+
     public Long getId() {
         return id;
     }
