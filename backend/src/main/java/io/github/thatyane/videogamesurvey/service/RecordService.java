@@ -27,12 +27,8 @@ public class RecordService {
     }
 
     public Record create(RecordInsertDTO dto) {
-        try {
-            Game game = gameService.findById(dto.getGameId());
-            return recordRepository.save(dto.toEntity(game));
-        } catch (DataIntegrityViolationException e) {
-            throw new DataIntegrityViolationException("Seu voto já foi realizado.");
-        }
+        Game game = gameService.findById(dto.getGameId());
+        return recordRepository.save(dto.toEntity(game));
     }
 
     @Transactional(readOnly = true)

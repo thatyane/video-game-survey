@@ -1,6 +1,7 @@
 package io.github.thatyane.videogamesurvey.model;
 
 import lombok.EqualsAndHashCode;
+import org.springframework.util.Assert;
 
 import javax.persistence.*;
 import java.io.Serializable;
@@ -24,10 +25,12 @@ public class Genre implements Serializable {
     @OneToMany(mappedBy = "genre")
     private List<Game> games = new ArrayList<>();
 
+    @Deprecated
     public Genre() {
     }
 
     public Genre(Long id, String name) {
+        Assert.hasText(name, "O nome precisa estar preenchido");
         this.id = id;
         this.name = name;
     }

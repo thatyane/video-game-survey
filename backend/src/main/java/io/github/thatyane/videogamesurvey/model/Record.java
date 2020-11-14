@@ -36,6 +36,7 @@ public class Record implements Serializable {
     @JoinColumn(name = "game_id")
     private Game game;
 
+    @Deprecated
     public Record() {
     }
 

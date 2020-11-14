@@ -1,5 +1,6 @@
 package io.github.thatyane.videogamesurvey.dto;
 
+import io.github.thatyane.videogamesurvey.exception.UniqueValue;
 import io.github.thatyane.videogamesurvey.model.Game;
 import io.github.thatyane.videogamesurvey.model.Record;
 
@@ -15,6 +16,7 @@ public class RecordInsertDTO implements Serializable {
 
     @NotEmpty(message = "E-mail obrigatório")
     @Email(message = "E-mail inválido")
+    @UniqueValue(domainClass = Record.class, fieldName = "email", message = "Seu voto já foi realizado")
     private String email;
 
     @NotEmpty(message = "Nome obrigatório")
@@ -23,9 +25,6 @@ public class RecordInsertDTO implements Serializable {
 
     @NotNull(message = "Jogo obrigatório")
     private Long gameId;
-
-    public RecordInsertDTO() {
-    }
 
     public RecordInsertDTO(String email, String name, Integer age, Long gameId) {
         this.email = email;
@@ -46,24 +45,12 @@ public class RecordInsertDTO implements Serializable {
         return age;
     }
 
-    public void setAge(Integer age) {
-        this.age = age;
-    }
-
     public Long getGameId() {
         return gameId;
     }
 
-    public void setGameId(Long gameId) {
-        this.gameId = gameId;
-    }
-
     public String getEmail() {
         return email;
-    }
-
-    public void setEmail(String email) {
-        this.email = email;
     }
 
     public Record toEntity(Game game) {

@@ -6,6 +6,7 @@ import io.github.thatyane.videogamesurvey.exception.ObjectNotFoundException;
 import io.github.thatyane.videogamesurvey.model.Game;
 import io.github.thatyane.videogamesurvey.model.Genre;
 import io.github.thatyane.videogamesurvey.repository.GameRepository;
+import io.github.thatyane.videogamesurvey.repository.GenreRepository;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -15,11 +16,11 @@ import java.util.List;
 public class GameService {
 
     private GameRepository gameRepository;
-    private GenreService genreService;
+    private GenreRepository genreRepository;
 
-    public GameService(GameRepository gameRepository, GenreService genreService) {
+    public GameService(GameRepository gameRepository, GenreRepository genreRepository) {
         this.gameRepository = gameRepository;
-        this.genreService = genreService;
+        this.genreRepository = genreRepository;
     }
 
     @Transactional(readOnly = true)
@@ -34,7 +35,8 @@ public class GameService {
     }
 
     public Game create(GameInsertDto dto) {
-        Genre genre = genreService.findById(dto.getGenreId());
+        Genre genre = genreRepository.findById(dto.getGenreId())
+                .orElseThrow(() -> new ObjectNotFoundException("Gênero não encontrado! Id: " + dto.getGenreId()));
         return gameRepository.save(dto.toEntity(genre));
     }
 }

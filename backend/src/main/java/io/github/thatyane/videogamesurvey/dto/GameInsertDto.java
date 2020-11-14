@@ -24,24 +24,12 @@ public class GameInsertDto implements Serializable {
         return title;
     }
 
-    public void setTitle(String title) {
-        this.title = title;
-    }
-
     public String getPlatform() {
         return platform;
     }
 
-    public void setPlatform(String platform) {
-        this.platform = platform;
-    }
-
     public Long getGenreId() {
         return genreId;
-    }
-
-    public void setGenreId(Long genreId) {
-        this.genreId = genreId;
     }
 
     public Game toEntity(Genre genre) {

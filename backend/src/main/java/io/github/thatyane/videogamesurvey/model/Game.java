@@ -5,6 +5,7 @@ import io.github.thatyane.videogamesurvey.model.enums.Platform;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.EqualsAndHashCode;
+import org.springframework.util.Assert;
 
 import javax.persistence.*;
 import java.io.Serializable;
@@ -40,19 +41,17 @@ public class Game implements Serializable {
     @OneToMany(mappedBy = "game")
     private List<Record> records = new ArrayList<>();
 
+    @Deprecated
     public Game() {
     }
 
     public Game(Long id, String title, Platform platform, Genre genre) {
+        Assert.hasText(title, "O titulo precisa estar preenchido");
+        Assert.notNull(platform, "A plataforma precisa estar preenchida");
         this.id = id;
         this.title = title;
         this.platform = platform;
         this.genre = genre;
-    }
-
-    public Game(String title, Platform platform) {
-        this.title = title;
-        this.platform = platform;
     }
 
     public Long getId() {
